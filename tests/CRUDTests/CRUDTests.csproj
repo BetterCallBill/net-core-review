@@ -23,9 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Entities\Entities.csproj" />
-    <ProjectReference Include="..\..\src\ServiceContracts\ServiceContracts.csproj" />
     <ProjectReference Include="..\..\src\Services\Services.csproj" />
+    <ProjectReference Include="..\..\src\ServiceContracts\ServiceContracts.csproj" />
+    <ProjectReference Include="..\..\src\Entities\Entities.csproj" />
   </ItemGroup>
 
 </Project>
