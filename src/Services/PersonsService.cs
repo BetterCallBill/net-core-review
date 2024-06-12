@@ -83,7 +83,7 @@ namespace Services
 
         public List<PersonResponse> GetAllPersons()
         {
-            return _persons.Select(temp => temp.ToPersonResponse()).ToList();
+            return _persons.Select(temp => ConvertPersonToPersonResponse(temp)).ToList();
         }
 
         public PersonResponse? GetPersonByPersonID(Guid? personID)
@@ -95,7 +95,7 @@ namespace Services
             if (person == null)
                 return null;
 
-            return person.ToPersonResponse();
+            return ConvertPersonToPersonResponse(person);
         }
 
         public List<PersonResponse> GetFilteredPersons(string searchBy, string? searchString)
@@ -145,7 +145,8 @@ namespace Services
                     temp.Address.Contains(searchString, StringComparison.OrdinalIgnoreCase) : true)).ToList();
                     break;
 
-                default: matchingPersons = allPersons; break;
+                default: matchingPersons = allPersons; 
+                    break;
             }
             return matchingPersons;
         }
@@ -219,7 +220,7 @@ namespace Services
             matchingPerson.Address = personUpdateRequest.Address;
             matchingPerson.ReceiveNewsLetters = personUpdateRequest.ReceiveNewsLetters;
 
-            return matchingPerson.ToPersonResponse();
+            return ConvertPersonToPersonResponse(matchingPerson);
         }
 
         public bool DeletePerson(Guid? PersonID)
