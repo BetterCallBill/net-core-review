@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Entities;
-using ServiceContracts.DTO.Enums;
+using ServiceContracts.Enums;
 
 namespace ServiceContracts.DTO
 {
@@ -12,7 +12,7 @@ namespace ServiceContracts.DTO
         [Required(ErrorMessage = "Email can't be blank")]
         [EmailAddress(ErrorMessage = "Email value should be a valid email")]
         public string? Email { get; set; }
-        
+
         public DateTime? DateOfBirth { get; set; }
         public GenderOptions? Gender { get; set; }
         public Guid? CountryID { get; set; }

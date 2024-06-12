@@ -9,7 +9,7 @@ public class CountriesServiceTest
 
     public CountriesServiceTest()
     {
-        _countriesService = new CountriesService();
+        _countriesService = new CountriesService(false);
     }
 
     // When CountryAddRequest is null, it should throw ArgumentNullException

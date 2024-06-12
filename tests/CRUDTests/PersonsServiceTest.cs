@@ -1,6 +1,6 @@
 using Entities;
 using ServiceContracts.DTO;
-using ServiceContracts.DTO.Enums;
+using ServiceContracts.Enums;
 using Services;
 
 namespace CRUDTests
@@ -12,8 +12,8 @@ namespace CRUDTests
 
         public PersonsServiceTest()
         {
-            _personsService = new PersonsService();
-            _countriesService = new CountriesService();
+            _personsService = new PersonsService(false);
+            _countriesService = new CountriesService(false);
         }
 
         #region AddPerson

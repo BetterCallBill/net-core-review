@@ -1,5 +1,5 @@
 using Entities;
-using ServiceContracts.DTO.Enums;
+using ServiceContracts.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace ServiceContracts.DTO
