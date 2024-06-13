@@ -4,7 +4,8 @@
     ViewBag.Title = "Persons";
 }
 
-<form action="~/persons/index" method="get">
+<form asp-controller="Persons" asp-action="Index" method="get">
+
     <h1>Persons</h1>
 
     <div class="box flex">
@@ -33,7 +34,7 @@
 
         <div class="flex-1">
             <button class="button button-blue-back">Search</button>
-            <a href="~/persons/index" class="link-hover">Clear all</a>
+            <a asp-action="Index" asp-controller="Persons" class="link-hover">Clear all</a>
         </div>
     </div>
 
@@ -79,6 +80,8 @@
                 { "ColumnName", nameof(PersonResponse.ReceiveNewsLetters) },
                 { "DisplayName", "Receive News Letters" },
                 })
+
+                <td>Edit</td>
             </tr>
         </thead>
         <tbody>
@@ -93,6 +96,12 @@
                     <td>@person.Country</td>
                     <td>@person.Address</td>
                     <td>@person.ReceiveNewsLetters</td>
+                    <td>
+                        <a asp-controller="Persons" asp-action="Edit" asp-route-personID="@person.PersonID"
+                            class="link-hover">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    </td>
                 </tr>
             }
             <tr></tr>
