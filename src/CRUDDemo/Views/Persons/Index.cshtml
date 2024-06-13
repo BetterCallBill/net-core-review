@@ -81,7 +81,7 @@
                 { "DisplayName", "Receive News Letters" },
                 })
 
-                <td>Edit</td>
+                <td></td>
             </tr>
         </thead>
         <tbody>
@@ -100,6 +100,10 @@
                         <a asp-controller="Persons" asp-action="Edit" asp-route-personID="@person.PersonID"
                             class="link-hover">
                             <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <a asp-controller="Persons" asp-action="Delete" asp-route-personID="@person.PersonID"
+                            class="link-hover">
+                            <i class="fa-solid fa-trash" style="color: #ff0000;"></i>
                         </a>
                     </td>
                 </tr>
