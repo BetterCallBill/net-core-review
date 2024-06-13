@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Entities
 {
     /// <summary>
@@ -5,6 +7,7 @@ namespace Entities
     /// </summary>
     public class Person
     {
+        [Key]
         public Guid PersonID { get; set; }
         public string? PersonName { get; set; }
         public string? Email { get; set; }
