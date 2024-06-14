@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using ServiceContracts.Enums;
 
 namespace CRUDDemo.Controllers
 {
-    [Route("[controller]/[action]")]
+    [Route("[controller]")]
     public class PersonsController : Controller
     {
         //private fields
@@ -79,7 +78,7 @@ namespace CRUDDemo.Controllers
         }
 
         [HttpGet]
-        [Route("{personID}")]
+        [Route("[action]/{personID}")]
         public IActionResult Edit(Guid personID)
         {
             PersonResponse? personResponse = _personsService.GetPersonByPersonID(personID);
@@ -96,7 +95,7 @@ namespace CRUDDemo.Controllers
         }
 
         [HttpPost]
-        [Route("{personID}")]
+        [Route("[action]/{personID}")]
         public IActionResult Edit(PersonUpdateRequest personUpdateRequest)
         {
             PersonResponse? personResponse = _personsService.GetPersonByPersonID(personUpdateRequest.PersonID);
@@ -121,7 +120,7 @@ namespace CRUDDemo.Controllers
         }
 
         [HttpGet]
-        [Route("{personID}")]
+        [Route("[action]/{personID}")]
         public IActionResult Delete(Guid? personID)
         {
             PersonResponse? personResponse = _personsService.GetPersonByPersonID(personID);
@@ -132,7 +131,7 @@ namespace CRUDDemo.Controllers
         }
 
         [HttpPost]
-        [Route("{personID}")]
+        [Route("[action]/{personID}")]
         public IActionResult Delete(PersonUpdateRequest personUpdateResult)
         {
             PersonResponse? personResponse = _personsService.GetPersonByPersonID(personUpdateResult.PersonID);
