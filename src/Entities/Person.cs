@@ -16,5 +16,8 @@ namespace Entities
         public Guid? CountryID { get; set; }
         public string? Address { get; set; }
         public bool ReceiveNewsLetters { get; set; }
+
+        //[Column("TaxIdentificationNumber", TypeName = "varchar(8)")]
+        public string? TIN { get; set; }
     }
 }
