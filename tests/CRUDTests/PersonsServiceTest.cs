@@ -172,7 +172,6 @@ namespace CRUDTests
 
             //Assert
             persons_from_get.Should().BeEmpty();
-            Assert.Empty(persons_from_get);
         }
 
         //First, we will add few persons; and then when we call GetAllPersons(), it should return the same persons that were added
