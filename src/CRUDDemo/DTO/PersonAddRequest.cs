@@ -1,24 +1,20 @@
-using Entities;
-using ServiceContracts.Enums;
 using System.ComponentModel.DataAnnotations;
+using CRUDDemo.Entities;
+using CRUDDemo.Enums;
 
-namespace ServiceContracts.DTO
+namespace CRUDDemo.DTO
 {
-    /// <summary>
-    /// DTO class for adding a new country
-    /// </summary>
-    public class PersonUpdateRequest
+    public class PersonAddRequest
     {
-        [Required(ErrorMessage = "Person ID can't be blank")]
-        public Guid PersonID { get; set; }
-
         [Required(ErrorMessage = "Person Name can't be blank")]
         public string? PersonName { get; set; }
 
         [Required(ErrorMessage = "Email can't be blank")]
         [EmailAddress(ErrorMessage = "Email value should be a valid email")]
+        [DataType(DataType.EmailAddress)]
         public string? Email { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
         public GenderOptions? Gender { get; set; }
         public Guid? CountryID { get; set; }
@@ -28,10 +24,19 @@ namespace ServiceContracts.DTO
         /// <summary>
         /// Converts the current object of PersonAddRequest into a new object of Person type
         /// </summary>
-        /// <returns>Returns Person object</returns>
+        /// <returns></returns>
         public Person ToPerson()
         {
-            return new Person() { PersonID = PersonID, PersonName = PersonName, Email = Email, DateOfBirth = DateOfBirth, Gender = Gender.ToString(), Address = Address, CountryID = CountryID, ReceiveNewsLetters = ReceiveNewsLetters };
+            return new Person()
+            {
+                PersonName = PersonName,
+                Email = Email,
+                DateOfBirth = DateOfBirth,
+                Gender = Gender.ToString(),
+                Address = Address,
+                CountryID = CountryID,
+                ReceiveNewsLetters = ReceiveNewsLetters
+            };
         }
     }
 }

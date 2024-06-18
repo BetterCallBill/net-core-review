@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace Entities.Data.Migrations
+namespace CRUDDemo.Data.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -36,11 +36,17 @@ namespace Entities.Data.Migrations
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CountryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ReceiveNewsLetters = table.Column<bool>(type: "bit", nullable: false)
+                    ReceiveNewsLetters = table.Column<bool>(type: "bit", nullable: false),
+                    TaxIdentificationNumber = table.Column<string>(type: "varchar(8)", nullable: true, defaultValue: "ABC12345")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Persons", x => x.PersonID);
+                    table.ForeignKey(
+                        name: "FK_Persons_Countries_CountryID",
+                        column: x => x.CountryID,
+                        principalTable: "Countries",
+                        principalColumn: "CountryID");
                 });
 
             migrationBuilder.InsertData(
@@ -73,16 +79,21 @@ namespace Entities.Data.Migrations
                     { new Guid("cb035f22-e7cf-4907-bd07-91cfee5240f3"), "484 Clarendon Court", new Guid("8f30bedc-47dd-4286-8950-73d8a68e5d41"), new DateTime(1997, 9, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "lwoodwing9@wix.com", "Male", "Lombard", false },
                     { new Guid("d15c6d9f-70b4-48c5-afd3-e71261f1a9be"), "83187 Merry Drive", new Guid("12e15727-d369-49a9-8b13-bc22e9362179"), new DateTime(1987, 1, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), "asarvar3@dropbox.com", "Male", "Angie", true }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Persons_CountryID",
+                table: "Persons",
+                column: "CountryID");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Countries");
+                name: "Persons");
 
             migrationBuilder.DropTable(
-                name: "Persons");
+                name: "Countries");
         }
     }
 }

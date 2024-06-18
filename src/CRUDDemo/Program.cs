@@ -1,18 +1,21 @@
-using Entities;
+using CRUDDemo.Entities;
 using Microsoft.EntityFrameworkCore;
-using ServiceContracts;
-using Services;
+using CRUDDemo.Services;
+using CRUDDemo.Interfaces;
+using CRUDDemo.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 //add services into IoC container
+builder.Services.AddScoped<ICountriesRepository, CountriesRepository>();
+builder.Services.AddScoped<IPersonsRepository, PersonsRepository>();
 builder.Services.AddScoped<ICountriesService, CountriesService>();
 builder.Services.AddScoped<IPersonsService, PersonsService>();
-builder.Services.AddDbContext<PersonsDbContext>
+builder.Services.AddDbContext<ApplicationDbContext>
 (
   options =>
   {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("PersonsDbContext"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationDbContext"));
   }
 );
 

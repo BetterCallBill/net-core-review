@@ -1,4 +1,4 @@
-namespace ServiceContracts.Enums
+namespace CRUDDemo.Enums
 {
     public enum SortOrderOptions
     {

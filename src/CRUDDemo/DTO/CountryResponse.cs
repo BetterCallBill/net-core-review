@@ -1,6 +1,6 @@
-using Entities;
+using CRUDDemo.Entities;
 
-namespace ServiceContracts.DTO
+namespace CRUDDemo.DTO
 {
     /// <summary>
     /// DTO class that is used as return type for most of CountriesService methods

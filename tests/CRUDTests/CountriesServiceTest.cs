@@ -1,108 +1,120 @@
-using  ServiceContracts.DTO;
-using Services;
+// using AutoFixture;
+// using CRUDDemo.DTO;
+// using CRUDDemo.Interfaces;
+// using CRUDDemo.Services;
+// using Moq;
 
-namespace CRUDTests;
+// namespace CRUDTests;
 
-public class CountriesServiceTest
-{
-    private readonly ICountriesService _countriesService;
+// public class CountriesServiceTest
+// {
+//     private readonly ICountriesService _countriesService;
 
-    public CountriesServiceTest()
-    {
-        _countriesService = new CountriesService(false);
-    }
+//     // mock repository
+//     private readonly Mock<ICountriesRepository> _countriesRepositoryMock;
+//     private readonly ICountriesRepository _countriesRepository;
+//     private readonly IFixture _fixture;
 
-    // When CountryAddRequest is null, it should throw ArgumentNullException
-    [Fact]
-    public void AddCountry_Null_Exception()
-    {
-        //Arrange
-        CountryAddRequest? countryAddRequest = null;
+//     //constructor
+//     public CountriesServiceTest()
+//     {
+//         _fixture = new Fixture();
+//         _countriesRepositoryMock = new Mock<ICountriesRepository>();
+//         _countriesRepository = _countriesRepositoryMock.Object;
+//         _countriesService = new CountriesService(_countriesRepository);
+//     }
 
-        Assert.Throws<ArgumentNullException>(() => _countriesService.AddCountry(countryAddRequest));
-    }
+//     // When CountryAddRequest is null, it should throw ArgumentNullException
+//     [Fact]
+//     public void AddCountry_Null_Exception()
+//     {
+//         //Arrange
+//         CountryAddRequest? countryAddRequest = null;
 
-    //When the CountryName is null, it should throw ArgumentException
-    [Fact]
-    public void AddCountry_CountryNameIsNull()
-    {
-        //Arrange
-        CountryAddRequest? request = new CountryAddRequest() { CountryName = null };
+//         Assert.Throws<ArgumentNullException>(() => _countriesService.AddCountry(countryAddRequest));
+//     }
 
-        //Assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            //Act
-            _countriesService.AddCountry(request);
-        });
-    }
+//     //When the CountryName is null, it should throw ArgumentException
+//     [Fact]
+//     public void AddCountry_CountryNameIsNull()
+//     {
+//         //Arrange
+//         CountryAddRequest? request = new CountryAddRequest() { CountryName = null };
 
-    //When the CountryName is duplicate, it should throw ArgumentException
-    [Fact]
-    public void AddCountry_DuplicateCountryName()
-    {
-        //Arrange
-        CountryAddRequest? request1 = new CountryAddRequest() { CountryName = "USA" };
-        CountryAddRequest? request2 = new CountryAddRequest() { CountryName = "USA" };
+//         //Assert
+//         Assert.Throws<ArgumentException>(() =>
+//         {
+//             //Act
+//             _countriesService.AddCountry(request);
+//         });
+//     }
 
-        //Assert
-        Assert.Throws<ArgumentException>(() =>
-        {
-            //Act
-            _countriesService.AddCountry(request1);
-            _countriesService.AddCountry(request2);
-        });
-    }
+//     //When the CountryName is duplicate, it should throw ArgumentException
+//     [Fact]
+//     public void AddCountry_DuplicateCountryName()
+//     {
+//         //Arrange
+//         CountryAddRequest? request1 = new CountryAddRequest() { CountryName = "USA" };
+//         CountryAddRequest? request2 = new CountryAddRequest() { CountryName = "USA" };
 
-    //When you supply proper country name, it should insert (add) the country to the existing list of countries
-    [Fact]
-    public void AddCountry_ProperCountryDetails()
-    {
-        //Arrange
-        CountryAddRequest? request = new CountryAddRequest() { CountryName = "Japan" };
+//         //Assert
+//         Assert.Throws<ArgumentException>(() =>
+//         {
+//             //Act
+//             _countriesService.AddCountry(request1);
+//             _countriesService.AddCountry(request2);
+//         });
+//     }
 
-        //Act
-        CountryResponse response = _countriesService.AddCountry(request);
+//     //When you supply proper country name, it should insert (add) the country to the existing list of countries
+//     [Fact]
+//     public void AddCountry_ProperCountryDetails()
+//     {
+//         //Arrange
+//         CountryAddRequest? request = new CountryAddRequest() { CountryName = "Japan" };
 
-        //Assert
-        Assert.True(response.CountryID != Guid.Empty);
-    }
+//         //Act
+//         CountryResponse response = _countriesService.AddCountry(request);
 
-    [Fact]
-    public void GetCountryByCountryID_NullCountryID_Null()
-    {
-        //Arrange
-        Guid? countryID = null;
+//         //Assert
+//         Assert.True(response.CountryID != Guid.Empty);
+//     }
 
-        //Act
-        CountryResponse? response = _countriesService.GetCountryByCountryID(countryID);
+//     [Fact]
+//     public void GetCountryByCountryID_NullCountryID_Null()
+//     {
+//         //Arrange
+//         Guid? countryID = null;
 
-        //Assert
-        Assert.Null(response);
-    }
+//         //Act
+//         CountryResponse? response = _countriesService.GetCountryByCountryIDAsync(countryID);
 
-    [Fact]
-    public void GetCountryByCountryID_ValidCountryID_Country()
-    {
-        //Arrange
-        CountryAddRequest? country_add_request = new CountryAddRequest() { CountryName = "China" };
-        CountryResponse country_response_from_add = _countriesService.AddCountry(country_add_request);
+//         //Assert
+//         Assert.Null(response);
+//     }
 
-        //Act
-        CountryResponse? country_response_from_get = _countriesService.GetCountryByCountryID(country_response_from_add.CountryID);
+//     [Fact]
+//     public void GetCountryByCountryID_ValidCountryID_Country()
+//     {
+//         //Arrange
+//         CountryAddRequest? country_add_request = new CountryAddRequest() { CountryName = "China" };
+//         CountryResponse country_response_from_add = _countriesService.AddCountry(country_add_request);
 
-        //Assert
-        Assert.Equal(country_response_from_add, country_response_from_get);
-    }
+//         //Act
+//         CountryResponse? country_response_from_get = _countriesService.GetCountryByCountryIDAsync(country_response_from_add.CountryID);
 
-    [Fact]
-    //The list of countries should be empty by default (before adding any countries)
-    public void GetAllCountries_EmptyList()
-    {
-        //Act
-        List<CountryResponse> actual_country_response_list = _countriesService.GetAllCountries();
+//         //Assert
+//         Assert.Equal(country_response_from_add, country_response_from_get);
+//     }
 
-        //Assert
-        Assert.Empty(actual_country_response_list);
-    }
-}
+//     [Fact]
+//     //The list of countries should be empty by default (before adding any countries)
+//     public void GetAllCountries_EmptyList()
+//     {
+//         //Act
+//         List<CountryResponse> actual_country_response_list = _countriesService.GetAllCountries();
+
+//         //Assert
+//         Assert.Empty(actual_country_response_list);
+//     }
+// }

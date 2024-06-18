@@ -1,2 +1,3 @@
 global using Xunit;
-global using ServiceContracts;
+global using FluentAssertions;
+global using System.Linq.Expressions;

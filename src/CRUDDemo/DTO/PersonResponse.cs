@@ -1,7 +1,7 @@
-using Entities;
-using ServiceContracts.Enums;
+using CRUDDemo.Entities;
+using CRUDDemo.Enums;
 
-namespace ServiceContracts.DTO
+namespace CRUDDemo.DTO
 {
     public class PersonResponse
     {
