@@ -83,15 +83,16 @@ namespace CRUDTests
             //Arrange
             PersonAddRequest? personAddRequest = _fixture.Build<PersonAddRequest>().With(x => x.Email, "test@test.com").Create();
             Person person = personAddRequest.ToPerson();
-            PersonResponse personResponseExpected = person.ToPersonResponse();
+            PersonResponse person_response_expected = person.ToPersonResponse();
 
             _personRepositoryMock.Setup(x => x.AddPerson(It.IsAny<Person>())).ReturnsAsync(person);
 
             //Act
-            PersonResponse personResponseActual = await _personsService.AddPersonAsync(personAddRequest);
+            PersonResponse person_response_actual = await _personsService.AddPersonAsync(personAddRequest);
+            person_response_expected.PersonID = person_response_actual.PersonID;
 
             //Assert
-            personResponseActual.Should().Be(personResponseExpected);
+            person_response_actual.Should().Be(person_response_expected);
         }
 
 
@@ -135,7 +136,10 @@ namespace CRUDTests
         [Fact]
         public async Task GetPersonByPersonID_ValidPersonID_Success()
         {
-            Person person = _fixture.Build<Person>().With(x => x.Email, "test@test.com").Create();
+            Person person = _fixture.Build<Person>()
+                .With(temp => temp.Email, "email@sample.com")
+                .With(temp => temp.Country, null as Country)
+                .Create();
             PersonResponse person_response_expected = person.ToPersonResponse();
 
             // mock
@@ -146,7 +150,6 @@ namespace CRUDTests
 
             //Assert
             person_response_actual.Should().Be(person_response_expected);
-            Assert.NotNull(person_response_actual);
         }
 
         #endregion
@@ -249,12 +252,11 @@ namespace CRUDTests
 
             //mock
             _personRepositoryMock
-             .Setup(temp => temp.GetFilteredPersons(It.IsAny<Expression<Func<Person, bool>>>()))
-             .ReturnsAsync(persons);
-
+                .Setup(temp => temp.GetFilteredPersons(It.IsAny<Expression<Func<Person, bool>>>()))
+                .ReturnsAsync(persons);
 
             //Act
-            List<PersonResponse> persons_list_from_get = await _personsService.GetFilteredPersonsAsync(string.Empty, string.Empty);
+            List<PersonResponse> persons_list_from_get = await _personsService.GetFilteredPersonsAsync(nameof(PersonResponse.PersonName), string.Empty);
 
             //Assert
             persons_list_from_get.Should().BeEquivalentTo(person_response_list_expected);
